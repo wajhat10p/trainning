@@ -1,12 +1,11 @@
 package com.example.demo1;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.List;
 
 
 @Path("/todo")
@@ -17,10 +16,29 @@ public class TodoRest {
     TodoService todoService;
 
     @POST
-    @Path("/new")
-    public Response creatTodo(Todo todo){
-    todoService.createTodo(todo);
-    return Response.ok(todo).build();
+    @Path("new")
+    public Response creatTodo(Todo todo) {
+        todoService.createTodo(todo);
+        return Response.ok(todo).build();
+    }
+
+    @PUT
+    @Path("update")
+    public Response updateTodo(Todo todo) {
+        todoService.updateTodo(todo);
+        return Response.ok(todo).build();
+    }
+
+    @GET
+    @Path("{id}")
+    public Todo getTodo(@PathParam("id") long id) {
+       return todoService.findToDoByid(id=id);
+    }
+
+    @Path("list")
+    @GET
+    public List<Todo> getTodos(){
+        return todoService.getTodos();
     }
 
 }
