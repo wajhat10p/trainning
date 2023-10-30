@@ -15,22 +15,23 @@ public class TodoRest {
     @Inject
     TodoService todoService;
 
-    @POST
     @Path("new")
+    @POST
+
     public Response creatTodo(Todo todo) {
         todoService.createTodo(todo);
         return Response.ok(todo).build();
     }
 
-    @PUT
     @Path("update")
+    @PUT
     public Response updateTodo(Todo todo) {
         todoService.updateTodo(todo);
         return Response.ok(todo).build();
     }
 
-    @GET
     @Path("{id}")
+    @GET
     public Todo getTodo(@PathParam("id") long id) {
        return todoService.findToDoByid(id=id);
     }
