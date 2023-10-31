@@ -20,7 +20,7 @@ public class TodoRest {
 
     public Response creatTodo(Todo todo) {
         todoService.createTodo(todo);
-        return Response.ok(todo).build();
+        return Response.ok(todo).status(201).build();
     }
 
     @Path("update")
@@ -33,13 +33,21 @@ public class TodoRest {
     @Path("{id}")
     @GET
     public Todo getTodo(@PathParam("id") long id) {
-       return todoService.findToDoByid(id=id);
+        return todoService.findToDoByid(id = id);
     }
 
     @Path("list")
     @GET
-    public List<Todo> getTodos(){
+    public List<Todo> getTodos() {
         return todoService.getTodos();
     }
 
+    @Path("status")
+    @POST
+    public Response markAsComplete(@QueryParam("id") Long id) {
+        Todo todo = todoService.findToDoByid(id);
+        todo.setCompleted(true);
+        todoService.updateTodo(todo);
+        return Response.ok(todo).build();
+    }
 }
