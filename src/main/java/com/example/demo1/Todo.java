@@ -1,6 +1,11 @@
 package com.example.demo1;
 
+import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -10,8 +15,13 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-
+    @NotEmpty(message = "task must be provided")
+    @Size(min = 10, message = "Task shouldnt be less than 10 characters")
     private String task;
+
+    @NotNull(message = "It can not be null")
+    @FutureOrPresent(message = "'dueDate' should be from future or present")
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     private LocalDate dueDate;
     private boolean isCompleted;
     private LocalDate dateCompleted;
