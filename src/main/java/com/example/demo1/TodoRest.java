@@ -40,20 +40,7 @@ public class TodoRest {
     @Path("list")
     @GET
     public List<Todo> getTodos(@QueryParam("task") String task, @QueryParam("dateCompleted") String dateCompleted) {
-        List<Todo> filteredTodos = todoService.getTodos();
-
-        if (task != null) {
-            filteredTodos = filteredTodos.stream()
-                    .filter(todo -> todo.getTask().equals(task))
-                    .collect(Collectors.toList());
-        }
-
-        if (dateCompleted != null) {
-            filteredTodos = filteredTodos.stream()
-                    .filter(todo -> todo.getDateCompleted().equals(dateCompleted))
-                    .collect(Collectors.toList());
-        }
-
+        List<Todo> filteredTodos = todoService.getTodos(task = task, dateCompleted = dateCompleted);
         return filteredTodos;
     }
 
