@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Path("/todo")
@@ -38,9 +39,14 @@ public class TodoRest {
 
     @Path("list")
     @GET
-    public List<Todo> getTodos() {
-        return todoService.getTodos();
+    public List<Todo> getTodos(@QueryParam("task") String task,
+                               @QueryParam("dateCompleted") String dateCompleted,
+                               @DefaultValue("1") @QueryParam("page") int page,
+                               @DefaultValue("10") @QueryParam("pageSize") int pageSize) {
+        List<Todo> filteredTodos = todoService.getTodos(task = task, dateCompleted = dateCompleted, page = page, pageSize = pageSize);
+        return filteredTodos;
     }
+
 
     @Path("status")
     @POST
