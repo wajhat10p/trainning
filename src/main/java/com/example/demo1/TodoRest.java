@@ -39,8 +39,11 @@ public class TodoRest {
 
     @Path("list")
     @GET
-    public List<Todo> getTodos(@QueryParam("task") String task, @QueryParam("dateCompleted") String dateCompleted) {
-        List<Todo> filteredTodos = todoService.getTodos(task = task, dateCompleted = dateCompleted);
+    public List<Todo> getTodos(@QueryParam("task") String task,
+                               @QueryParam("dateCompleted") String dateCompleted,
+                               @DefaultValue("1") @QueryParam("page") int page,
+                               @DefaultValue("10") @QueryParam("pageSize") int pageSize) {
+        List<Todo> filteredTodos = todoService.getTodos(task = task, dateCompleted = dateCompleted, page = page, pageSize = pageSize);
         return filteredTodos;
     }
 

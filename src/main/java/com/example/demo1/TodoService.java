@@ -26,7 +26,7 @@ public class TodoService {
         return entityManager.find(Todo.class, id);
     }
 
-    public List<Todo> getTodos(String task,String dateCompleted ) {
+    public List<Todo> getTodos(String task, String dateCompleted, int page, int pageSize) {
 //         serve as a placeholder for the beginning of the WHERE clause
         StringBuilder jpql = new StringBuilder("SELECT t from Todo t WHERE 1=1");
 
@@ -48,6 +48,10 @@ public class TodoService {
             query.setParameter("dateCompleted", dateCompleted);
         }
 
+        // Calculate offset and limit
+        int offset = (page - 1) * pageSize;
+        query.setFirstResult(offset);
+        query.setMaxResults(pageSize);
         return query.getResultList();
     }
 }
